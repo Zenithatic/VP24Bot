@@ -18,19 +18,21 @@ const client = new Discord.Client({
 
 // Skeleton command registration from discord.js guide
 client.commands = new Discord.Collection()
-const commandsPath = Path.join(__dirname, 'commands')
-const commandFiles = FileSystem.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
+const foldersPath = Path.join(__dirname, 'commands')
+const commandFolders = FileSystem.readdirSync(foldersPath)
 
-for (const file of commandFiles) {
-    // Get all command files
-    const filePath = Path.join(commandsPath, file);
-    const command = require(filePath)
-
-    // Upload commands to Collection in client
-    if ('data' in command && 'execute' in command) {
-		client.commands.set(command.data.name, command);
-	} else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required 'data' or 'execute' property.`);
+for (const folder of commandFolders) {
+	const commandsPath = Path.join(foldersPath, folder);
+	const commandFiles = FileSystem.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+	for (const file of commandFiles) {
+		const filePath = Path.join(commandsPath, file);
+		const command = require(filePath);
+		// Set a new item in the Collection with the key as the command name and the value as the exported module
+		if ('data' in command && 'execute' in command) {
+			client.commands.set(command.data.name, command);
+		} else {
+			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+		}
 	}
 }
 
@@ -60,6 +62,6 @@ client.on('interactionCreate', async interaction => {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
-
-    await command.execute(interaction)
 })
+
+client.login(Tokens.token)
