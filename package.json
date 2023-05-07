@@ -1,0 +1,15 @@
+{
+  "name": "vp24bot",
+  "version": "1.0.0",
+  "description": "discord bot for vp24 server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zenithatic",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "mongodb": "^5.4.0"
+  }
+}
