@@ -6,7 +6,7 @@ const data = {
         .setName('ping')
         .setDescription('replies with pong'),
     async execute(interaction){
-        await interaction.reply({content: `Pong! The bot latency is ${interaction.createdTimestamp - Date.now()}ms`, ephemeral: false})
+        await interaction.reply({content: `Pong! The bot latency is ${Math.abs(interaction.createdTimestamp - Date.now())}ms`, ephemeral: false})
     }
 }
 
