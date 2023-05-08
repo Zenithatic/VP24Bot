@@ -66,4 +66,4 @@ client.on('interactionCreate', async interaction => {
 
 client.login(Tokens.token)
 
-module.exports = {bot: client}
+module.exports = client
